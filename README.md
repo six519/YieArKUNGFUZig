@@ -12,6 +12,12 @@ A Yie Ar Kung-Fu clone created in Zig with raylib.
 * Kick = S letter key
 * Quit = Escape key
 
+## Build and run
+
+```bash
+zig build run
+```
+
 ## Screenshot
 
 ![YieArKUNGFUZig](ss.png)
