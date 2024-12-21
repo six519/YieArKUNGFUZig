@@ -50,6 +50,33 @@ pub const SpriteLetters = [_][]const u8{
     "*",
 };
 
+pub const TileCount = struct {
+    name: []const u8,
+    count: u8,
+};
+
+pub const tileCounts: [19]TileCount = [_]TileCount{
+    TileCount{ .name = "letters", .count = SpriteLetters.len },
+    TileCount{ .name = "player_normal", .count = 2 },
+    TileCount{ .name = "wang_normal", .count = 2 },
+    TileCount{ .name = "tao_normal", .count = 2 },
+    TileCount{ .name = "chen_normal", .count = 4 },
+    TileCount{ .name = "lang_normal", .count = 2 },
+    TileCount{ .name = "mu_normal", .count = 2 },
+    TileCount{ .name = "spinning_chain", .count = 8 },
+    TileCount{ .name = "wang_kick", .count = 2 },
+    TileCount{ .name = "tao_kick", .count = 2 },
+    TileCount{ .name = "chen_kick", .count = 2 },
+    TileCount{ .name = "lang_kick", .count = 2 },
+    TileCount{ .name = "mu_kick", .count = 2 },
+    TileCount{ .name = "wang_other", .count = 2 },
+    TileCount{ .name = "tao_other", .count = 2 },
+    TileCount{ .name = "chen_other", .count = 2 },
+    TileCount{ .name = "lang_other", .count = 2 },
+    TileCount{ .name = "mu_other", .count = 2 },
+    TileCount{ .name = "player_dead", .count = 2 },
+};
+
 pub const Sprite = struct {
     x: i16,
     y: i16,
@@ -78,7 +105,7 @@ pub const Sprite = struct {
         try self.draw();
     }
 
-    pub fn setTileCount(self: *Sprite, count: u8) !void {
+    pub fn setTileCount(self: *Sprite, count: u8) void {
         self.tileCount = count;
         const rect = ray.Rectangle{
             .x = 0,

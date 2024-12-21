@@ -17,28 +17,10 @@ pub fn init() !void {
         try loadSprite(image, idx);
     }
 
-    try global.sprites[global.findSpriteImagesIndex("letters")].setTileCount(sprite.SpriteLetters.len);
-    try global.sprites[global.findSpriteImagesIndex("player_normal")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("wang_normal")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("tao_normal")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("chen_normal")].setTileCount(4);
-    try global.sprites[global.findSpriteImagesIndex("lang_normal")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("mu_normal")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("spinning_chain")].setTileCount(8);
-
-    try global.sprites[global.findSpriteImagesIndex("wang_kick")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("tao_kick")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("chen_kick")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("lang_kick")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("mu_kick")].setTileCount(2);
-
-    try global.sprites[global.findSpriteImagesIndex("wang_other")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("tao_other")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("chen_other")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("lang_other")].setTileCount(2);
-    try global.sprites[global.findSpriteImagesIndex("mu_other")].setTileCount(2);
-
-    try global.sprites[global.findSpriteImagesIndex("player_dead")].setTileCount(2);
+    // load tile counts
+    for (sprite.tileCounts) |tc| {
+        loadTileCount(tc);
+    }
 
     for (stage.Villains) |villain| {
         global.sprites[global.findSpriteImagesIndex(try std.fmt.allocPrint(std.heap.page_allocator, "{s}_normal", .{villain}))].frameSpeed = stage.VILLAIN_SPRITE_FRAME_SPEED;
@@ -112,6 +94,8 @@ fn cleanUp() !void {
     try stage.gameStage.unloadTexture();
 
     std.heap.page_allocator.free(global.sprites);
+    std.heap.page_allocator.free(global.musics);
+    std.heap.page_allocator.free(global.sounds);
     ray.CloseAudioDevice();
     ray.CloseWindow();
 }
@@ -150,4 +134,8 @@ fn loadSprite(name: []const u8, index: u64) !void {
     spr.x = 0;
 
     global.sprites[index] = spr;
+}
+
+fn loadTileCount(tileCount: sprite.TileCount) void {
+    global.sprites[global.findSpriteImagesIndex(tileCount.name)].setTileCount(tileCount.count);
 }
