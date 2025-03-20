@@ -62,7 +62,7 @@ pub fn findSpriteImagesIndex(text: []const u8) u64 {
 }
 
 pub fn getRandomNumber(min: u8, max: u8) !u8 {
-    var prng = std.rand.DefaultPrng.init(blk: {
+    var prng = std.Random.DefaultPrng.init(blk: {
         var seed: u64 = undefined;
         try std.posix.getrandom(std.mem.asBytes(&seed));
         break :blk seed;
